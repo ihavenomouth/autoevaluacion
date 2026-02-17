@@ -1,0 +1,19 @@
+GET http://localhost:3000/api/alumno HTTP/1.1
+
+###
+
+GET http://localhost:3000/api/alumno/j%40j.es HTTP/1.1
+
+###
+
+
+POST http://localhost:3000/api/alumno HTTP/1.1
+content-type: application/json
+
+{
+    "nombre": "Javier",
+    "email": "j@j.es",
+    "clave": "1234",
+    "id_curso": "1",
+    "id_grupo": "1"
+}
