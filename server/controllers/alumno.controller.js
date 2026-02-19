@@ -1,5 +1,5 @@
 import AlumnoModel from "../models/alumno.model.js";
-
+import argon2 from "argon2";
 
 
 class AlumnoController {
@@ -10,15 +10,31 @@ class AlumnoController {
     res.send(alumnos);
   }
 
+
   static getAlumnoByEmail(req,res){
     const email = req.params.email;
-    res.send({email});
+    const alumno = AlumnoModel.getAlumnoByEmail(email);
+    if(alumno)
+      res.send(alumno);
+    else
+      res.status(404).send("No existe el alumno con email " + email);
   }
 
-  static createAlumno(req,res){
+
+
+  static async createAlumno(req,res){
     const {nombre,email,clave,id_curso,id_grupo} = req.body;
-    const alumno = AlumnoModel.createAlumno(nombre,email,clave,id_curso,id_grupo);
-    res.send(alumno);
+    try {
+      const claveHash = await argon2.hash(clave);
+      const id = AlumnoModel.createAlumno(nombre,email,claveHash,id_curso,id_grupo);
+      
+      if(id)
+        res.send({nombre,email,id,id_curso,id_grupo});
+      else
+        res.status(500).send("No se pudo crear el usuario");
+    } catch (err) {
+      res.status(500).send("No se pudo crear el usuario");
+    }
   }
 
   static removeAlumno(req,res){

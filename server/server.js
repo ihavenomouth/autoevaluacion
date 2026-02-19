@@ -4,11 +4,11 @@ const port = 3000
 
 
 app.use( express.json() );
-app.use( express.urlencoded({extended:true}) )
+app.use( express.urlencoded({extended:true}) );
 
 // Servimos los ficheros estáticos
 import path from 'path';
-app.use(express.static(path.join(import.meta.dirname, 'public')))
+app.use(express.static(path.join(import.meta.dirname, 'public')));
 
 
 
@@ -26,12 +26,11 @@ app.use("/api/alumno", alumnoRouter);
 
 // Ruta genérica
 app.use((req, res, next) => {
-  res.status(404).send("Recurso no encontrado")
+  res.status(404).send("Recurso no encontrado");
 })
 
 // Error handler genérico
 app.use((err, req, res, next) => {
-  console.error(err.stack)
   res.status(500).send('Error indeterminado. No se pudo procesar la petición')
 })
 
