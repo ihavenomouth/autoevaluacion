@@ -10,5 +10,7 @@ alumnoRouter
 .post('/', AlumnoController.createAlumno)
 .delete('/', AlumnoController.removeAlumno)
 .put('/', AlumnoController.modifyAlumno)
+.post('/login', AlumnoController.loginAlumno)
+.post('/logout', AlumnoController.logoutAlumno)
 
 export default alumnoRouter;

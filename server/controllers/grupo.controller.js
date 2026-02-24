@@ -1,7 +1,9 @@
+import GrupoModel from "../models/grupo.model.js";
+
 class GrupoController {
 
   static getGrupos(req,res){
-    res.send([]);
+    res.send( GrupoModel.getGrupos() );
   }
 }
 

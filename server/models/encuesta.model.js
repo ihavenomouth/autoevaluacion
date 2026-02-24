@@ -1,11 +1,11 @@
 import database from "../database/conexion.js";
 
-class AlumnoModel{
+class EncuestaModel{
   
-  static getAlumnos(){
+  static getEncuestas(){
     // const query = database.prepare('INSERT INTO data (key, value) VALUES (?, ?)');
     // insert.run(1, 'hello');
-    const query = database.prepare('SELECT id, nombre, email,id_curso,id_grupo FROM ALUMNO;');
+    const query = database.prepare('SELECT * FROM ENCUESTA;');
     return query.all();
   }
 
@@ -21,9 +21,9 @@ class AlumnoModel{
   }
 
 
-  static getAlumnoByEmail(email){
-    const query = database.prepare('SELECT id, nombre, email, id_curso, id_grupo FROM ALUMNO WHERE email=?');
-    return query.get(email); 
+  static getEncuestasByCursoYGrupo(curso, grupo){
+    const query = database.prepare('SELECT * FROM ENCUESTA WHERE id_curso=? AND id_grupo=?');
+    return query.all(curso, grupo); 
   }
 
 

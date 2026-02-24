@@ -1,7 +1,9 @@
+import CursoModel from "../models/curso.model.js";
+
 class CursoController {
 
   static getCursos(req,res){
-    res.send([]);
+    res.send(CursoModel.getCursos());
   }
 }
 

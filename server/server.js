@@ -11,6 +11,11 @@ import path from 'path';
 app.use(express.static(path.join(import.meta.dirname, 'public')));
 
 
+// Cookieparser
+import cookieParser from 'cookie-parser';
+app.use(cookieParser());
+
+
 
 // Rutas de mi API
 import cursoRouter from './routers/curso.router.js';
@@ -26,7 +31,8 @@ app.use("/api/alumno", alumnoRouter);
 
 // Ruta genérica
 app.use((req, res, next) => {
-  res.status(404).send("Recurso no encontrado");
+  // res.status(404).send("Recurso no encontrado");
+  res.redirect("/");
 })
 
 // Error handler genérico
