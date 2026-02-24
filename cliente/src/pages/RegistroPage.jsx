@@ -17,7 +17,7 @@ function RegistroPage() {
   }, []);
 
 
-  const [setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
 
 
   const refNombre = useRef();

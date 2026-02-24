@@ -22,7 +22,7 @@ class AlumnoModel{
 
 
   static getAlumnoByEmail(email){
-    const query = database.prepare('SELECT id, nombre, email, id_curso, id_grupo FROM ALUMNO WHERE email=?');
+    const query = database.prepare('SELECT id, nombre, email, id_curso, id_grupo, clave FROM ALUMNO WHERE email=?');
     return query.get(email); 
   }
 

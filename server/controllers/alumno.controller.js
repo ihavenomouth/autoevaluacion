@@ -79,8 +79,7 @@ class AlumnoController {
 
   static async loginAlumno(req, res) {
     //FIXME: validación
-    const email = req.email;
-    const clave = req.clave;
+    const {email, clave} = req.body;
 
     try {
       const alumno = AlumnoModel.getAlumnoByEmail(email);
@@ -88,7 +87,6 @@ class AlumnoController {
       if (await argon2.verify(alumno.clave, clave)) {
 
         const admin = alumno.email == process.env.EMAIL_ADMIN ? true : false;
-
         //generamos el token
         const token = jwt.sign(
           {
@@ -106,20 +104,34 @@ class AlumnoController {
             secure: false, //FIXME: cambiarlo en producción
             sameSite: "strict"
           })
-          .send(alumno);
+          .send({nombre:alumno.nombre, email: alumno.email, id:alumno.id, id_curso: alumno.id_curso, id_grupo: alumno.id_grupo, admin: admin});
+          return;
       } else {
-        res.status(401).send("No se pudo realizar el login.");
+        res.status(401).send("No se pudo realizar el login. Clave incorrecta.");
       }
     } catch (err) {
       res.status(401).send("No se pudo realizar el login.");
     }
-    res.send({});
   }
 
 
 
   static logoutAlumno(req, res) {
     res.clearCookie('token').send("Sesión cerrada.");
+  }
+
+  // TODO: cambiarlo para que se refresque la cookie y el token
+  static checkLoginAlumno(req, res) {
+    //Al ser una ruta verificada, si no hay token o no es correcto el middleware auth se encarga 
+    res.cookie("token", token,
+      {
+        maxAge: 36000000, //10 horas
+        path: "/",
+        httpOnly: true,
+        secure: false, //FIXME: cambiarlo en producción
+        sameSite: "strict"
+      })
+      .send("Se ha refrescado la cookie de autenticación");
   }
 
 }

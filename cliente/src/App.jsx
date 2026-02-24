@@ -1,7 +1,17 @@
 import Routes from "./routes/Routes"
 import NavBar from "./components/NavBar"
 
+import useAlumnoStore from "./store/useAlumnoStore";
+import { useEffect } from "react";
+
 function App() {
+
+  const checkLogin = useAlumnoStore(state => state.checkLogin);
+
+  useEffect(()=>{
+    checkLogin
+  }
+  ,[]);
 
   return (
     <>

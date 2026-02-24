@@ -73,7 +73,7 @@ const useAlumnoStore = create(
       },
 
 
-      //TODO: TERMINARLO PARA QUE HAGA LA LLAMADA AL SERVIDOR
+
       logoutAlumno: async ()=>{
         set({ error: false });
 
@@ -85,8 +85,8 @@ const useAlumnoStore = create(
           if (!response.ok)
             throw new Error("No se pudo realizar el cierre de sesión del alumno");
 
-          const datos = await response.text();
-          console.log(datos); //TODO: eliminar este console.log
+          // const datos = await response.text();
+          // console.log(datos); //TODO: eliminar este console.log
           set({
             nombre: null,
             email: null,
@@ -101,6 +101,34 @@ const useAlumnoStore = create(
         }
         catch (error) {
           set({ error: true });
+          console.error(error);
+        }
+      },
+
+
+      checkLogin: async ()=>{
+        set({ error: false });
+
+        try {
+          const response = await fetch("/api/alumno/checkLogin", {
+            method: "post"
+          });
+
+          if (!response.ok)
+            throw new Error("No se pudo comprobar el estado de la sesión del alumno");
+
+          set({ error: false });
+        }
+        catch (error) {
+          set({
+            nombre: null,
+            email: null,
+            admin: false,
+            id: null,
+            id_curso: null,
+            id_grupo: null,
+            error: true,
+          });
           console.error(error);
         }
       }

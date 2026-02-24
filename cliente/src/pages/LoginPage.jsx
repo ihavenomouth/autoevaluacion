@@ -1,27 +1,32 @@
 import H1 from "../components/H1";
 import useAlumnoStore from "../store/useAlumnoStore";
 import { useLocation } from "wouter";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function LoginPage() {
 
   const loginAlumno = useAlumnoStore((state) => state.loginAlumno);
+  const email = useAlumnoStore(state => state.email);
   
-  const [setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const refEmail = useRef();
   const refPassword = useRef();
 
   const gestionarLogin = () =>{
-    const email = refEmail.current.value.trim();
-    const clave = refPassword.current.value.trim();
-
+    const emailLogin = refEmail.current.value.trim();
+    const claveLogin = refPassword.current.value.trim();
 
     //TODO: VALIDAR
 
-    loginAlumno(email, clave);
-    //Si fue correcto:
-    setLocation("/main");
+    loginAlumno(emailLogin, claveLogin);
   }
+
+  //Redirigimos a la página principal si tuvimos éxito al hacer login
+  useEffect(()=>{
+    setLocation("/admin")}
+  ,[email])
+
+  
 
   return (
     <>
