@@ -5,7 +5,7 @@ class AlumnoModel{
   static getAlumnos(){
     // const query = database.prepare('INSERT INTO data (key, value) VALUES (?, ?)');
     // insert.run(1, 'hello');
-    const query = database.prepare('SELECT id, nombre, email,id_curso,id_grupo FROM ALUMNO;');
+    const query = database.prepare('SELECT ALUMNO.id as id, ALUMNO.nombre, email, id_curso, CURSO.nombre as curso, id_grupo, GRUPO.nombre as grupo FROM ALUMNO LEFT JOIN CURSO on CURSO.id = id_curso LEFT JOIN GRUPO on id_grupo = GRUPO.id');
     return query.all();
   }
 

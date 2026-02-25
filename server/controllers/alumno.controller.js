@@ -8,7 +8,7 @@ class AlumnoController {
 
   static getAlumnos(req, res) {
     const alumnos = AlumnoModel.getAlumnos();
-    console.log(alumnos);
+    // console.log(alumnos);
     res.send(alumnos);
   }
 
@@ -120,9 +120,14 @@ class AlumnoController {
     res.clearCookie('token').send("Sesión cerrada.");
   }
 
+
+
   // TODO: cambiarlo para que se refresque la cookie y el token
   static checkLoginAlumno(req, res) {
     //Al ser una ruta verificada, si no hay token o no es correcto el middleware auth se encarga 
+    
+    const token = req.cookies.token;
+
     res.cookie("token", token,
       {
         maxAge: 36000000, //10 horas
@@ -132,6 +137,7 @@ class AlumnoController {
         sameSite: "strict"
       })
       .send("Se ha refrescado la cookie de autenticación");
+      return;
   }
 
 }

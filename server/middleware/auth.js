@@ -4,6 +4,7 @@ import  jwt from "jsonwebtoken";
 function verify(req, res, next){
 
   const token = req.cookies.token;
+
   if(!token){
     res.status(401).send("No se pudo realizar la autenticación. Falta el token.");
     return;

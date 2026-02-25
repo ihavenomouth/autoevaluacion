@@ -1,12 +1,12 @@
 import H1 from "../components/H1";
-import useAlumnoStore from "../store/useAlumnoStore";
+import useUsuarioStore from "../store/useUsuarioStore";
 import { useLocation } from "wouter";
 import { useEffect, useRef } from "react";
 
 function LoginPage() {
 
-  const loginAlumno = useAlumnoStore((state) => state.loginAlumno);
-  const email = useAlumnoStore(state => state.email);
+  const loginAlumno = useUsuarioStore((state) => state.loginAlumno);
+  const email = useUsuarioStore(state => state.email);
   
   const [location, setLocation] = useLocation();
   const refEmail = useRef();
@@ -23,15 +23,16 @@ function LoginPage() {
 
   //Redirigimos a la página principal si tuvimos éxito al hacer login
   useEffect(()=>{
-    setLocation("/admin")}
-  ,[email])
+    if(email)
+      setLocation("/main")}
+  ,[email,setLocation])
 
   
 
   return (
     <>
       <H1>Iniciar sesión</H1>
-      <fieldset className="fieldset bg-base-200 border-primary rounded-box w-xs border p-4">
+      <fieldset className="fieldset bg-base-200 border-primary rounded-box w-xs border p-4 mx-auto">
         <legend className="fieldset-legend">Login</legend>
 
         <label className="label">Email</label>

@@ -1,11 +1,11 @@
 import { useLocation } from "wouter";
 import H1 from "../components/H1";
-import useAlumnoStore from "../store/useAlumnoStore";
+import useUsuarioStore from "../store/useUsuarioStore";
 import useCursoYGrupoStore from "../store/useCursoYGrupoStore";
 import { useEffect, useRef } from "react";
 
 function RegistroPage() {
-  const createAlumno = useAlumnoStore((state) => state.createAlumno);
+  const createAlumno = useUsuarioStore((state) => state.createAlumno);
   const fetchGrupos = useCursoYGrupoStore((state) => state.fetchGrupos);
   const fetchCursos = useCursoYGrupoStore((state) => state.fetchCursos);
   const cursos = useCursoYGrupoStore((state) => state.cursos);
@@ -14,10 +14,10 @@ function RegistroPage() {
   useEffect(() => {
     fetchCursos();
     fetchGrupos();
-  }, []);
+  }, [fetchCursos,fetchGrupos]);
 
 
-  const [location, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
 
 
   const refNombre = useRef();
@@ -47,7 +47,7 @@ function RegistroPage() {
   return (
     <>
       <H1>Crear cuenta</H1>
-      <fieldset className="fieldset bg-base-200 border-primary rounded-box w-xs border p-4">
+      <fieldset className="fieldset bg-base-200 border-primary rounded-box w-xs border p-4 mx-auto">
         <legend className="fieldset-legend">Login</legend>
 
         <label className="label">Nombre</label>
