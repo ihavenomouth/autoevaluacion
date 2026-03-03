@@ -5,18 +5,27 @@ import useCursoYGrupoStore from "../../store/useCursoYGrupoStore";
 function CursosPage() {
   const fetchCursos = useCursoYGrupoStore(state => state.fetchCursos);
   const cursos = useCursoYGrupoStore(state => state.cursos);
+  const createCurso = useCursoYGrupoStore(state => state.createCurso);
 
   useEffect(() => {
     fetchCursos();
-  }, []);
+  }, [fetchCursos]);
+
+  const crearCurso=()=>{
+    const nombreÚltimoCurso = cursos.at(-1).nombre;
+    const numeroÚltimoCurso = Number(nombreÚltimoCurso.split("-")[1]);
+    const nombreNuevoCurso = numeroÚltimoCurso + "-" + (numeroÚltimoCurso+1);
+
+    createCurso(nombreNuevoCurso);
+  }
+
 
   return (
     <>
       <H2>Crear cursos</H2>
 
-      {/* TODO: terminar añadir curso */}
       <div className="my-4 p-4 bg-base-100">
-        <button className="btn btn-primary">Añadir curso</button>
+        <button className="btn btn-primary" onClick={crearCurso}>Añadir curso</button>
       </div>
 
       <H2>Gestionar cursos</H2>

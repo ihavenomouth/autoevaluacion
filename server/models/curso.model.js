@@ -7,6 +7,16 @@ class CursoModel{
     return query.all();
   }
 
+  static createCurso(nombre){
+    const query = database.prepare('INSERT INTO CURSO(nombre) VALUES(?);');
+    const resultado = query.run(nombre);
+
+    if(resultado.changes==1)
+      return resultado.lastInsertRowid;
+    else
+      return null;
+  }
+
 
 }
 

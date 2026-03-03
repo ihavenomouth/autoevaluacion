@@ -27,6 +27,9 @@ app.use("/api/grupo", grupoRouter);
 import alumnoRouter from './routers/alumno.router.js';
 app.use("/api/alumno", alumnoRouter);
 
+import encuestaRouter from './routers/encuesta.router.js';
+app.use("/api/encuesta", encuestaRouter);
+
 
 
 // Ruta genérica

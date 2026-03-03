@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 const useCursoYGrupoStore = create(
-    (set) => ({
+    (set,get) => ({
       cursos: [],
       grupos: [],
       error: false,
@@ -18,6 +18,32 @@ const useCursoYGrupoStore = create(
           
           const datos = await response.json();
           set({ cursos: datos});
+          set({ error: false });
+        }
+        catch (error) {
+          set({ error: true });
+          console.error(error);
+        }
+      },
+
+
+      createCurso: async (nombre) => {
+        set({ error: false });
+        
+        try {
+          const response = await fetch("/api/curso",{
+            method: "post",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({nombre})
+          });
+          
+          if (!response.ok)
+            throw new Error("No se pudo crear el curso "+ nombre);
+          
+          const datos = await response.json();
+          set({ cursos: [...get().cursos, datos]});
           set({ error: false });
         }
         catch (error) {

@@ -10,9 +10,9 @@ class EncuestaModel{
   }
 
 
-  static createAlumno(nombre,email,clave,id_curso,id_grupo){
-    const query = database.prepare('INSERT INTO ALUMNO (nombre, email, clave, id_curso, id_grupo) VALUES (?, ?, ?, ?, ?)');
-    const resultado = query.run(nombre,email, clave, id_curso,id_grupo); 
+  static createEncuesta(nombre,id_curso,id_grupo){
+    const query = database.prepare('INSERT INTO ENCUESTA (nombre, id_curso, id_grupo) VALUES (?, ?, ?)');
+    const resultado = query.run(nombre, id_curso,id_grupo); 
 
     if(resultado.changes==1)
       return resultado.lastInsertRowid;
@@ -27,6 +27,20 @@ class EncuestaModel{
   }
 
 
+  static modifyEncuesta(id, nombre, id_curso, id_grupo){
+    
+    const query = database.prepare('UPDATE ENCUESTA SET nombre=?, id_curso=?, id_grupo=? WHERE id=?');
+    console.log("yes")
+    const resultado = query.run(nombre, id_curso,id_grupo, id); 
+
+    if(resultado.changes==1)
+      return {id,nombre,id_curso,id_grupo};
+    else
+      return null;
+  }
+
+
+
 }
 
-export default AlumnoModel;
+export default EncuestaModel;
