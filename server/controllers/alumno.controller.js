@@ -104,7 +104,7 @@ class AlumnoController {
             secure: false, //FIXME: cambiarlo en producción
             sameSite: "strict"
           })
-          .send({nombre:alumno.nombre, email: alumno.email, id:alumno.id, id_curso: alumno.id_curso, id_grupo: alumno.id_grupo, admin: admin});
+          .send({nombre:alumno.nombre, email: alumno.email, id:alumno.id, id_curso: alumno.id_curso, id_grupo: alumno.id_grupo, admin: admin, curso: alumno.curso, grupo: alumno.grupo});
           return;
       } else {
         res.status(401).send("No se pudo realizar el login. Clave incorrecta.");

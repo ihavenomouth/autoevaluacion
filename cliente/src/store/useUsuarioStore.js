@@ -10,6 +10,8 @@ const useUsuarioStore = create(
       id: null,
       id_curso: null,
       id_grupo: null,
+      curso: null,
+      grupo: null,
       error: false,
 
 
@@ -62,7 +64,7 @@ const useUsuarioStore = create(
             throw new Error("No se pudo realizar el login del alumno");
 
           const datos = await response.json();
-          set({ nombre: datos.nombre, email: datos.email, admin: datos.admin, id: datos.id, id_curso: datos.id_curso, id_grupo: datos.id_grupo });
+          set({ nombre: datos.nombre, email: datos.email, admin: datos.admin, id: datos.id, id_curso: datos.id_curso, id_grupo: datos.id_grupo, curso: datos.curso, grupo: datos.grupo });
 
           set({ error: false });
         }
@@ -95,6 +97,8 @@ const useUsuarioStore = create(
             id_curso: null,
             id_grupo: null,
             error: false,
+            curso: null,
+            grupo: null,
           })
 
           set({ error: false });
@@ -128,6 +132,8 @@ const useUsuarioStore = create(
             id_curso: null,
             id_grupo: null,
             error: true,
+            curso: null,
+            grupo: null
           });
           console.error(error);
         }

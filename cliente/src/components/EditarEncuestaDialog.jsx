@@ -18,6 +18,7 @@ function EditarEncuestaDialog({ encuesta, setOpen }) {
 
   const guardarCambios = () =>{
     //TODO: VALIDAR
+    //FIXME: Cuando se modifica el curso o grupo no se muestra en la tabla el resultado de la modificación
     const nombre = refNombre.current.value.trim();
     const id_curso = refCurso.current.value;
     const id_grupo = refGrupo.current.value;

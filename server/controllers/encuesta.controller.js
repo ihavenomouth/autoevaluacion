@@ -11,15 +11,15 @@ class EncuestaController {
   }
 
 
-  // static getEncuestasByCursoYGrupo(req,res){
-  //   const curso = req.params.curso;  // VALIDAR
-  //   const grupo = req.params.grupo;
-  //   const encuestas = EncuestaModel.getEncuestaByCursoYGrupo(curso, grupo);
-  //   if(encuestas.length!=0)
-  //     res.send(encuestas);
-  //   else
-  //     res.status(404).send("No se encuentran encuestas de ese grupo y curso.");
-  // }
+  static getEncuestasByCursoYGrupo(req,res){
+    const id_curso = req.params.id_curso;  // TODO: VALIDAR
+    const id_grupo = req.params.id_grupo;
+    const encuestas = EncuestaModel.getEncuestasByCursoYGrupo(id_curso, id_grupo);
+    // if(encuestas.length!=0)
+    res.send(encuestas);
+    // else
+      // res.status(404).send("No se encuentran encuestas de ese grupo y curso.");
+  }
 
 
 
