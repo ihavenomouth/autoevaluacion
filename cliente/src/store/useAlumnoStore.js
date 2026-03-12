@@ -6,9 +6,8 @@ const useAlumnoStore = create(
       error: false,
 
 
-      fetchAlumnos: async (nombre, email, clave, id_curso, id_grupo) => {
+      fetchAlumnos: async () => {
         set({ error: false });
-        console.log(nombre, email, clave, id_curso, id_grupo)
         try {
           const response = await fetch("/api/alumno");
 

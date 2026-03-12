@@ -7,7 +7,7 @@ const encuestaRouter = express.Router();
 // Rutas: /api/encuesta
 encuestaRouter
 .get('/', EncuestaController.getEncuestas)
-.post('/', EncuestaController.createEncuesta)
+.post('/', verify, EncuestaController.createEncuesta)
 // .delete('/', EncuestaController.removeEncuesta)
 .put('/', verify, EncuestaController.modifyEncuesta)
 

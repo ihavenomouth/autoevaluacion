@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import RegistroPage from "../pages/RegistroPage";
 import MainPage from "../pages/MainPage";
 import AdminPage from "../pages/AdminPage";
+// import PreguntasPage from "../pages/Admin/PreguntasPage.jsx";
 
 
 function Routes(){
@@ -14,14 +15,14 @@ function Routes(){
       <Route path="/login" component={LoginPage} />
       <Route path="/registro" component={RegistroPage} />
       <Route path="/main" component={MainPage} />
-      {/* <Route path="/mainAdmin" component={MainAdminPage} /> */}
+
+    
+      {/* <Route path="/admin/preguntas/encuesta/:id">
+        {(params) => <PreguntasPage id_encuesta={params.id}/>}
+      </Route>   */}
       <Route path="/admin/:*" component={AdminPage} />
+      <Route path="/admin/preguntas/encuesta/:*" component={AdminPage} />
       <Route path="/admin" component={AdminPage} /> 
-      
-      {/* Usamos un wildcard para que este componente capture todas las subrutas */}
-      {/* <Route path="/admin/:*">
-        <MainAdminPage />
-      </Route> */}
       
       <Route><Redirect to="/"/></Route>
     </Switch>

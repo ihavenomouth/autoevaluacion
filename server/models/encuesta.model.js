@@ -5,7 +5,8 @@ class EncuestaModel{
   static getEncuestas(){
     // const query = database.prepare('INSERT INTO data (key, value) VALUES (?, ?)');
     // insert.run(1, 'hello');
-    const query = database.prepare('SELECT * FROM ENCUESTA;');
+    // const query = database.prepare('SELECT * FROM ENCUESTA;');
+    const query = database.prepare('select encuesta.*, grupo.nombre as grupo, curso.nombre as curso from encuesta LEFT JOIN grupo ON id_grupo=grupo.id LEFT JOIN curso ON curso.id = id_curso;');
     return query.all();
   }
 

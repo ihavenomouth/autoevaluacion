@@ -3,6 +3,7 @@ import { create } from 'zustand'
 const useEncuestaStore = create(
     (set,get) => ({
       encuestas: [],
+      preguntas: [],
       error: false,
 
 
@@ -75,6 +76,104 @@ const useEncuestaStore = create(
           console.error(error);
         }
       },
+
+
+      createPregunta: async (id_encuesta, nombre, texto, peso) => {
+        set({ error: false });
+        
+        try {
+          const response = await fetch("/api/pregunta",{
+            method: "post",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({id_encuesta, nombre, texto, peso})
+          });
+          
+          if (!response.ok)
+            throw new Error("No se pudo crear la pregunta "+ nombre);
+          
+          const datos = await response.json();
+          set({ preguntas: [...get().preguntas, datos], error: false});
+        }
+        catch (error) {
+          set({ error: true });
+          console.error(error);
+        }
+      },
+
+      fetchPreguntasById_encuesta: async (id_encuesta) => {
+        set({ error: false });
+        
+        try {
+          const response = await fetch("/api/pregunta/encuesta/"+id_encuesta);
+          
+          if (!response.ok)
+            throw new Error("No se pudieron recuperar las preguntas");
+          
+          const datos = await response.json();
+          set({ preguntas: datos, error: false});
+        }
+        catch (error) {
+          set({ error: true });
+          console.error(error);
+        }
+      },
+
+
+      modifyPregunta: async (id, nombre, texto, peso,id_encuesta) => {
+
+        set({ error: false });
+        
+        try {
+          const response = await fetch("/api/pregunta",{
+            method: "put",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({id, nombre, texto, peso, id_encuesta})
+          });
+          
+          if (!response.ok)
+            throw new Error("No se pudo modificar la pregunta "+ nombre);
+          
+          const datos = await response.json();
+          const posición = get().preguntas.findIndex(preg=>preg.id == id)
+          set({ preguntas: get().preguntas.with( posición, datos), error: false});
+        }
+        catch (error) {
+          set({ error: true });
+          console.error(error);
+        }
+      },
+
+
+      removePregunta: async (id) => {
+
+        set({ error: false });
+        
+        try {
+          const response = await fetch("/api/pregunta/"+id,{
+            method: "delete",
+            headers: {
+              "content-type": "application/json"
+            },
+          });
+          
+          if (!response.ok)
+            throw new Error("No se pudo eliminar la pregunta con id "+ id);
+          
+          await response.json(); // sólo nos devuelve un objeto con el id de la pregunta eliminada: {id:7}
+          set({ preguntas: get().preguntas.filter(p=>p.id != id), error: false});
+        }
+        catch (error) {
+          set({ error: true });
+          console.error(error);
+        }
+      },
+
+
+
 
     }
   )

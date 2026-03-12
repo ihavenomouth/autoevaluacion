@@ -12,11 +12,17 @@ function RoutesAdmin(){
   return(<>
     {/* <Router base="/admin"> */}
     <Switch>
+      {/* La ruta de las preguntas está en el router principal por ser más específica  */}
+      <Route path="/admin/preguntas/encuesta/:id">
+        {(params) => <PreguntasPage id_encuesta={params.id}/>}
+      </Route>  
+
+
       <Route path="/admin/cursos" component={CursosPage} />
       <Route path="/admin/grupos" component={GruposPage} />
       <Route path="/admin/alumnos" component={AlumnosPage} />
       <Route path="/admin/encuestas" component={EncuestasPage} />
-      <Route path="/admin/preguntas" component={PreguntasPage} />
+
       <Route path="/admin/resultados" component={ResultadosPage} />
       
       <Route path="/admin"><Redirect to="/admin/encuestas" /></Route>

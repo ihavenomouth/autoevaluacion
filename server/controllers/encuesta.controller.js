@@ -25,6 +25,11 @@ class EncuestaController {
 
 
   static createEncuesta(req,res){
+    if(!req.admin){
+      res.status(401).send("Sólo el administrador puede crear una encuesta");
+      return;
+    }
+
     const {nombre,id_curso,id_grupo} = req.body;
     const id_encuesta = EncuestaModel.createEncuesta(nombre,id_curso,id_grupo);
     if( id_encuesta){

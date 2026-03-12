@@ -30,6 +30,8 @@ app.use("/api/alumno", alumnoRouter);
 import encuestaRouter from './routers/encuesta.router.js';
 app.use("/api/encuesta", encuestaRouter);
 
+import preguntaRouter from './routers/pregunta.router.js';
+app.use("/api/pregunta", preguntaRouter);
 
 
 // Ruta genérica
