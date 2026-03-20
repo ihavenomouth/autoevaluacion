@@ -27,6 +27,11 @@ class AlumnoModel{
     return query.get(email); 
   }
 
+  static getAlumnosByCursoYGrupo(id_curso, id_grupo){
+    const query = database.prepare('SELECT alumno.id as id, alumno.nombre as nombre, id_curso, id_grupo FROM ALUMNO WHERE id_curso=? AND id_grupo=? ORDER BY alumno.nombre');
+    return query.all(id_curso,id_grupo); 
+  }
+
 
 }
 

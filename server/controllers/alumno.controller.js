@@ -24,6 +24,15 @@ class AlumnoController {
   }
 
 
+  static getAlumnosByCursoYGrupo(req, res) {
+    //FIXME: validación
+    const id_curso = req.params.id_curso;
+    const id_grupo = req.params.id_grupo;
+    const alumnos = AlumnoModel.getAlumnosByCursoYGrupo(id_curso,id_grupo);
+    res.send(alumnos);
+  }
+
+
 
 
   static async createAlumno(req, res) {

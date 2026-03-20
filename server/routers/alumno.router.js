@@ -8,6 +8,7 @@ const alumnoRouter = express.Router();
 alumnoRouter
 .get('/', AlumnoController.getAlumnos)
 .get('/:email', AlumnoController.getAlumnoByEmail)
+.get('/curso/:id_curso/grupo/:id_grupo',AlumnoController.getAlumnosByCursoYGrupo )
 .post('/', AlumnoController.createAlumno)
 .delete('/', AlumnoController.removeAlumno)
 .put('/', AlumnoController.modifyAlumno)
