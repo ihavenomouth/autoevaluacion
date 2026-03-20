@@ -33,6 +33,8 @@ app.use("/api/encuesta", encuestaRouter);
 import preguntaRouter from './routers/pregunta.router.js';
 app.use("/api/pregunta", preguntaRouter);
 
+import respuestaRouter from './routers/respuesta.router.js';
+app.use("/api/respuesta", respuestaRouter);
 
 // Ruta genérica
 app.use((req, res, next) => {

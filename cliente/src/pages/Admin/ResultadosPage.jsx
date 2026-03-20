@@ -1,6 +1,9 @@
+import H2 from "../../components/H2";
+
 function ResultadosPage(){
   return(<>
-    <p>Gestionar resultados</p>
+    <H2>Ver resultados</H2>
+    
   </>)
 }
 

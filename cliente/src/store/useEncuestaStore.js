@@ -7,6 +7,10 @@ const useEncuestaStore = create(
       preguntas: [],
       error: false,
 
+      //Las notas con las que el usuario ha contestado a las preguntas de una encuesta
+      //[ ...{id_pregunta, id_alumno, id_alumno_evaluado, nota} ]
+      respuestas: [],
+
 
       fetchEncuestas: async () => {
         set({ error: false });
@@ -133,10 +137,13 @@ const useEncuestaStore = create(
           
           const datos = await response.json();
           set({ preguntas: datos, error: false});
+          return datos;
+          
         }
         catch (error) {
           set({ error: true });
           console.error(error);
+          return null;
         }
       },
 
@@ -193,6 +200,54 @@ const useEncuestaStore = create(
       },
 
 
+
+
+      inicializarRespuestas: (preguntas, id_alumno, id_alumno_evaluado)=>{
+        // Si no vienen preguntas por parámetro, usamos las del store
+        const listaPreguntas = preguntas || get().preguntas;
+        
+        const respuestasIniciales = listaPreguntas.map( p=> ({id_alumno, id_alumno_evaluado, id_pregunta: p.id, nota:0}));
+        
+        set({respuestas: respuestasIniciales });
+      },
+
+
+      setNotaRespuesta: (id_pregunta, nota) => {
+        const respuestasActuales = get().respuestas;
+
+        const posRespuesta = respuestasActuales.findIndex( respuesta => respuesta.id_pregunta == id_pregunta);
+        if(posRespuesta != -1){
+          const nuevaRespuesta = { ...respuestasActuales[posRespuesta], nota: nota };
+          set({respuestas: respuestasActuales.with( posRespuesta, nuevaRespuesta)})
+        }
+      },
+
+
+      createRespuestas: async () => {
+        set({ error: false });
+        
+        try {
+          const respuestas = get().respuestas;
+          const response = await fetch("/api/respuesta",{
+            method: "post",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify(respuestas)
+          });
+          
+          if (!response.ok)
+            throw new Error("No se pudieron crear las respuestas "+ respuestas);
+          
+          await response.json();
+          // Aunque se devuelvan datos, no se usan para nada
+          set({ error: false });
+        }
+        catch (error) {
+          set({ error: true });
+          console.error(error);
+        }
+      },
 
 
     }

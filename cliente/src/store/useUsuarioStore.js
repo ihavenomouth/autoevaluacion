@@ -36,10 +36,12 @@ const useUsuarioStore = create(
           set({ nombre: datos.nombre, email: datos.email, admin: datos.admin, id: datos.id, id_curso: datos.id_curso, id_grupo: datos.id_grupo });
 
           set({ error: false });
+          return datos;
         }
         catch (error) {
           set({ error: true });
           console.error(error);
+          return null;
         }
       },
 

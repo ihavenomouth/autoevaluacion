@@ -2,7 +2,8 @@ import H1 from "./H1";
 import RatingStars from "./RatingStars";
 
 import useEncuestaStore from "../store/useEncuestaStore";
-import { useEffect, useState } from "react";
+import useUsuarioStore from "../store/useUsuarioStore";
+import { useEffect } from "react";
 
 
 function ContestarEncuestaDialog({ encuesta, alumno, setOpen }) {
@@ -10,38 +11,37 @@ function ContestarEncuestaDialog({ encuesta, alumno, setOpen }) {
   // const modifyEncuesta = useEncuestaStore(state => state.modifyEncuesta);
   const preguntas = useEncuestaStore(state => state.preguntas);
   const fetchPreguntasById_encuesta = useEncuestaStore(state => state.fetchPreguntasById_encuesta);
-
-  useEffect(()=>{
-    fetchPreguntasById_encuesta(encuesta.id);
-  },[])
   
+  const setNotaRespuesta = useEncuestaStore(state => state.setNotaRespuesta);
+  const inicializarRespuestas = useEncuestaStore(state => state.inicializarRespuestas);
+  const createRespuestas = useEncuestaStore(state => state.createRespuestas);
+  
+  const id_usuario = useUsuarioStore(state => state.id);
 
-  const [notas, setNotas] = useState({});
 
-  //TODO: Cambiar todo esto a una setNotas, notas y limpiarNotas de zustand. LimpiarNotas se ejecutará cada vez que se abra el Dialog
-  // Inicializamos el objeto notas con 0 para cada pregunta
+
   useEffect(() => {
-    if (preguntas.length > 0) {
-      const notasIniciales = {};
-      for(let p of preguntas){
-        notasIniciales[p.id] = 0;
+    const cargarYPreparar = async () => {
+      // 1. Obtenemos las preguntas
+      const arrPreguntas = await fetchPreguntasById_encuesta(encuesta.id);
+      
+      // 2. Si la carga fue exitosa, inicializamos las respuestas en el store
+      if (arrPreguntas) {
+        inicializarRespuestas(arrPreguntas, id_usuario, alumno.id);
       }
-      setNotas(notasIniciales);
-    }
-  }, [preguntas]);
+    };
+
+    cargarYPreparar();
+  }, [encuesta.id, id_usuario, alumno.id]);
 
 
-  const actualizarNota = (id_pregunta, valor) => {
-    setNotas(prev => ({
-      ...prev,
-      [id_pregunta]: valor
-    }));
-  };
 
   const guardarCambios = () =>{
     //TODO: VALIDAR
     //FIXME: debería cerrarse si el resultado de la operación es correcto
-    console.log("Notas finales:", notas);
+    const respuestas = useEncuestaStore.getState().respuestas; //TODO: Quitar esto, que no es necesario
+    console.log("Notas finales:", respuestas);
+    createRespuestas(); // las respuestas están en el store
     setOpen(false);
   }
 
@@ -50,18 +50,20 @@ function ContestarEncuestaDialog({ encuesta, alumno, setOpen }) {
       <dialog open className="modal">
         <div className="modal-box max-w-2xl">
           <H1 className="font-bold text-lg">Contestar encuesta</H1>
-          <p className="my-4">Encuesta: {encuesta.nombre}</p>
-          <p className="my-4">Alumno: {alumno.nombre}</p>
+          <p className="my-4"><span className="font-semibold text-primary">Encuesta:</span> {encuesta.nombre}</p>
+          <p className="my-4"><span className="font-semibold text-primary">Alumno:</span> {alumno.nombre}</p>
+
+          <p className="my-4 bg-base-200 rounded p-2"><span className="font-semibold text-primary">Importante:</span> una vez contestada la encuesta, no se puede volver a realizar.</p>
 
           <div className="fieldset bg-base-200 rounded-box p-4 mx-auto">
           {
             preguntas.map(p=>{return(
-              <div className="p-4 border border-accent rounded">
+              <div className="p-4 border border-primary rounded">
                 <p className="my-4 text-2xl font-medium">{p.nombre}</p>
                 <p className="my-4 text-base-content/75">{p.texto}</p>
                 <RatingStars 
                 name={`pregunta-${p.id}`} 
-                onNotaChange={(valor) => actualizarNota(p.id, valor)}
+                onNotaChange={(nota) => setNotaRespuesta(p.id, nota)}
                 />
               </div>
             )})
