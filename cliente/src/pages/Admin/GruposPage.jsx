@@ -21,7 +21,7 @@ function GruposPage() {
 
         {grupos.map(c => {
           return (
-            <li className="list-row items-center hover:bg-neutral" key={c.id}>
+            <li className="list-row items-center hover:bg-base-300" key={c.id}>
               <div className="font-thin opacity-80 tabular-nums">{c.id}</div>
               <div className="list-col-grow"> {/*font-semibold*/}
                 <span>{c.nombre}</span>

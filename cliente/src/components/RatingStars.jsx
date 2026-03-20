@@ -110,7 +110,7 @@ function RatingStars({name, onNotaChange}) {
       </div>
       </div>
 
-      <div className="my-4 text-primary/50">
+      <div className="my-4 text-primary/75">
         {
           <p>{
             mensajes[Math.floor(valor*5)]

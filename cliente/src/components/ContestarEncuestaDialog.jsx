@@ -39,8 +39,8 @@ function ContestarEncuestaDialog({ encuesta, alumno, setOpen }) {
   const guardarCambios = () =>{
     //TODO: VALIDAR
     //FIXME: debería cerrarse si el resultado de la operación es correcto
-    const respuestas = useEncuestaStore.getState().respuestas; //TODO: Quitar esto, que no es necesario
-    console.log("Notas finales:", respuestas);
+    // const respuestas = useEncuestaStore.getState().respuestas; //TODO: Quitar esto, que no es necesario
+    // console.log("Notas finales:", respuestas);
     createRespuestas(); // las respuestas están en el store
     setOpen(false);
   }
@@ -53,12 +53,12 @@ function ContestarEncuestaDialog({ encuesta, alumno, setOpen }) {
           <p className="my-4"><span className="font-semibold text-primary">Encuesta:</span> {encuesta.nombre}</p>
           <p className="my-4"><span className="font-semibold text-primary">Alumno:</span> {alumno.nombre}</p>
 
-          <p className="my-4 bg-base-200 rounded p-2"><span className="font-semibold text-primary">Importante:</span> una vez contestada la encuesta, no se puede volver a realizar.</p>
+          {/* <p className="my-4 bg-base-200 rounded p-2"><span className="font-semibold text-primary">Importante:</span> una vez contestada la encuesta, no se puede volver a realizar.</p> */}
 
           <div className="fieldset bg-base-200 rounded-box p-4 mx-auto">
           {
             preguntas.map(p=>{return(
-              <div className="p-4 border border-primary rounded">
+              <div className="p-4 my-2 border border-neutral rounded">
                 <p className="my-4 text-2xl font-medium">{p.nombre}</p>
                 <p className="my-4 text-base-content/75">{p.texto}</p>
                 <RatingStars 

@@ -35,7 +35,7 @@ function AlumnosPage() {
           </thead>
           <tbody>
             {alumnos.map(a => {return(
-              <tr key={a.id} className="hover:bg-neutral">
+              <tr key={a.id} className="hover:bg-base-300">
                 <th className="font-thin opacity-80 tabular-nums">{a.id}</th>
                 <td>
                   <span className="font-semibold">{a.nombre}</span> ({a.email})

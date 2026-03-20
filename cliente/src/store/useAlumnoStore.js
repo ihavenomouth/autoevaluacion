@@ -17,10 +17,12 @@ const useAlumnoStore = create(
 
           const datos = await response.json();
           set({ alumnos: datos, error: false });
+          return datos;
         }
         catch (error) {
           set({ error: true });
           console.error(error);
+          return null;
         }
       },
 

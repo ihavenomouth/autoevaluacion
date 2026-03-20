@@ -59,7 +59,7 @@ function EncuestasPage() {
 
 
       <label className="label">Nombre</label>
-      <input ref={refNombre} type="text" className="input" placeholder="Nombre" />
+      <input ref={refNombre} type="text" className="input input-primary" placeholder="Nombre" />
       
         <label className="label">Selecciona un curso</label>
         <select ref={refCurso} className="select select-primary">
@@ -102,7 +102,7 @@ function EncuestasPage() {
           <tbody>
             {
               encuestas.map(enc => {return(
-              <tr key={enc.id} className="hover:bg-neutral">
+              <tr key={enc.id} className="hover:bg-base-300">
                 <th className="font-thin opacity-80 tabular-nums">{enc.id}</th>
                 <td>
                   {enc.nombre}
